@@ -746,6 +746,8 @@
             <li>Retrieve all Invoices metadata or a single Invoice metadata based on its ID, Invoice filtering based on term, or by family code</li>
             <li>Retrieve all Credit Memos</li>
             <li>Retrieve all Payments </li>
+            <li>Retrieve all Payment Dishonours </li>
+            <li>Retrieve all Customer Refunds </li>
             <li>Retrieve all Customer deposits </li>
             <li>Retrieve all transactions </li>
             <li>Retrieve Debtor balances and deposit balances</li>
@@ -770,6 +772,8 @@
                 <li><strong>GET &nbsp;Base URL&amp;type=invoicemeta&amp;familyCode={familyCode}:</strong> Retrieve all invoices based on the family/family code</li>
                 <li><strong>GET &nbsp;Base URL&amp;type=creditmemo:</strong> Retrieve all Credit Memos</li>
                 <li><strong>GET &nbsp;Base URL&amp;type=payment:</strong> Retrieve all Payments</li>
+                <li><strong>GET &nbsp;Base URL&amp;type=paymentdishonour:</strong> Retrieve all Payment Dishonours</li>
+                <li><strong>GET &nbsp;Base URL&amp;type=customerrefund:</strong> Retrieve all Customer Refunds</li>
                 <li><strong>GET &nbsp;Base URL&amp;type=customerdeposit:</strong> Retrieve all customer deposits</li>
                 <li><strong>GET &nbsp;Base URL&amp;type=alltransactions:</strong> Retrieve all transaction types in a single response, including invoices, credit memos, payments, customer deposits and customer refund.</li>
                 <li><strong>GET &nbsp;Base URL&amp;type=debtor:</strong> Retrieve Debtor balances and deposit balances</li>
@@ -2363,7 +2367,271 @@ error message: An unexpected SuiteScript error has occurred</pre>
         </div>
     </div>
 </div>
-<!-- ENDPOINT: GET Customer Deposit Data -->
+        <!-- ENDPOINT: GET Payment Dishonour -->
+        <div class="endpoint">
+            <div class="endpoint-header" id="header-14" onclick="toggleEndpoint(14)">
+                <span class="method-badge method-get">GET</span>
+                <span class="endpoint-url">{Base URL}&type=paymentdishonour</span>
+                <span class="endpoint-toggle" id="toggle-14">▼</span>
+            </div>
+
+            <div class="endpoint-body" id="body-14">
+                <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 1rem; margin-bottom: 2rem; border-radius: 4px;">
+                    <h4 style="color: #0c4a6e; margin-bottom: 0.5rem; font-weight: 600;">Endpoint Overview</h4>
+                    <p style="color: #075985; line-height: 1.7;">
+                        This endpoint retrieves Payment Dishonour transactions.
+                    </p>
+                </div>
+
+                <!-- Query Parameters -->
+                <div class="section">
+                    <div class="section-title">Query Parameters</div>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">Key</th>
+                                <th style="width: 30%">Value</th>
+                                <th style="width: 50%">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="param-name">Script</span></td>
+                                <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">3229</code></td>
+                                <td>Script internal ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">deploy</span></td>
+                                <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">1</code></td>
+                                <td>Script deployment ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">type</span></td>
+                                <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">paymentdishonour</code></td>
+                                <td>Type of data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Headers -->
+                <div class="section">
+                    <div class="section-title">Headers <span style="color: #dc2626; font-size: 0.9rem;">(Must be manually added in Postman)</span></div>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Key</th>
+                                <th style="width: 35%">Value</th>
+                                <th style="width: 40%">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="param-name">Content-Type</span></td>
+                                <td><code style="background: #f3f4f6;">application/json</code></td>
+                                <td>Request content type</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">Accept</span></td>
+                                <td><code style="background: #f3f4f6;">application/json</code></td>
+                                <td>Expected response content type</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">Authorization</span></td>
+                                <td><code style="background: #f3f4f6; font-size: 0.75rem;">OAuth oauth_consumer_key="...", oauth_token="..."</code></td>
+                                <td>OAuth 1.0 authentication header</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Responses -->
+                <div class="section response-section">
+                    <div class="section-title">Responses</div>
+
+                    <!-- 200 OK -->
+                    <div class="response-code">
+                        <div class="response-code-header">
+                            <span class="response-status">200</span>
+                            <span class="response-desc">OK</span>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #6b7280; font-size: 0.875rem;">Payment dishonour transactions retrieved successfully</p>
+
+                        <div class="code-block">
+        <pre>{
+          "success": true,
+          "message": "Payment dishonour transactions retrieved successfully",
+          "totalRecords": 1,
+          "data": [
+            {
+              "internalId": "String",
+              "paymentNumber": "String",
+              "paymentDate": "String",
+              "customer": "String",
+              "customerId": "String",
+              "familyCode": "String",
+              "memo": "String",
+              "total": number,
+              "type": "String"
+            }
+          ]
+        }</pre>
+                        </div>
+                    </div>
+
+                    <!-- 204 -->
+                    <div class="response-code error">
+                        <div class="response-code-header">
+                            <span class="response-status">204</span>
+                            <span class="response-desc">No Content</span>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #6b7280; font-size: 0.875rem;">No records found matching the criteria.</p>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="notes">
+                    <h4>Notes</h4>
+                    <ul>
+                        <li>All dates are returned in DD/MM/YYYY format</li>
+                        <li>Timestamps are in ISO 8601 format</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENDPOINT: GET Customer Refund -->
+        <div class="endpoint">
+            <div class="endpoint-header" id="header-15" onclick="toggleEndpoint(15)">
+                <span class="method-badge method-get">GET</span>
+                <span class="endpoint-url">{Base URL}&type=customerrefund</span>
+                <span class="endpoint-toggle" id="toggle-15">▼</span>
+            </div>
+
+            <div class="endpoint-body" id="body-15">
+                <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 1rem; margin-bottom: 2rem; border-radius: 4px;">
+                    <h4 style="color: #0c4a6e; margin-bottom: 0.5rem; font-weight: 600;">Endpoint Overview</h4>
+                    <p style="color: #075985; line-height: 1.7;">
+                        This endpoint retrieves Customer Refund transactions.
+                    </p>
+                </div>
+
+                <!-- Query Parameters -->
+                <div class="section">
+                    <div class="section-title">Query Parameters</div>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">Key</th>
+                                <th style="width: 30%">Value</th>
+                                <th style="width: 50%">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="param-name">Script</span></td>
+                                <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">3229</code></td>
+                                <td>Script internal ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">deploy</span></td>
+                                <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">1</code></td>
+                                <td>Script deployment ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">type</span></td>
+                                <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">customerrefund</code></td>
+                                <td>Type of data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Headers -->
+                <div class="section">
+                    <div class="section-title">Headers <span style="color: #dc2626; font-size: 0.9rem;">(Must be manually added in Postman)</span></div>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Key</th>
+                                <th style="width: 35%">Value</th>
+                                <th style="width: 40%">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="param-name">Content-Type</span></td>
+                                <td><code style="background: #f3f4f6;">application/json</code></td>
+                                <td>Request content type</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">Accept</span></td>
+                                <td><code style="background: #f3f4f6;">application/json</code></td>
+                                <td>Expected response content type</td>
+                            </tr>
+                            <tr>
+                                <td><span class="param-name">Authorization</span></td>
+                                <td><code style="background: #f3f4f6; font-size: 0.75rem;">OAuth oauth_consumer_key="...", oauth_token="..."</code></td>
+                                <td>OAuth 1.0 authentication header</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Responses -->
+                <div class="section response-section">
+                    <div class="section-title">Responses</div>
+
+                    <!-- 200 OK -->
+                    <div class="response-code">
+                        <div class="response-code-header">
+                            <span class="response-status">200</span>
+                            <span class="response-desc">OK</span>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #6b7280; font-size: 0.875rem;">Customer refund transactions retrieved successfully</p>
+
+                        <div class="code-block">
+        <pre>{
+          "success": true,
+          "message": "Customer refunds retrieved successfully",
+          "totalRecords": 1,
+          "data": [
+            {
+              "internalId": "String",
+              "refundNumber": "String",
+              "refundDate": "String",
+              "customer": "String",
+              "memo": "String",
+              "total": number,
+              "type": "String"
+            }
+          ]
+        }</pre>
+                        </div>
+                    </div>
+
+                    <!-- 204 -->
+                    <div class="response-code error">
+                        <div class="response-code-header">
+                            <span class="response-status">204</span>
+                            <span class="response-desc">No Content</span>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: #6b7280; font-size: 0.875rem;">No records found matching the criteria.</p>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="notes">
+                    <h4>Notes</h4>
+                    <ul>
+                        <li>All dates are returned in DD/MM/YYYY format</li>
+                        <li>Timestamps are in ISO 8601 format</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENDPOINT: GET Customer Deposit Data -->
 <div class="endpoint">
     <div class="endpoint-header" id="header-8" onclick="toggleEndpoint(8)">
         <span class="method-badge method-get">GET</span>
