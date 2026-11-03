@@ -3074,13 +3074,13 @@ error message: An unexpected SuiteScript error has occurred</pre>
 <tr><td><code>toDate</code></td><td>YYYY-MM-DD</td><td>—</td><td>End of date range (inclusive)</td></tr>
 </table>
 <p class="pagination-note"><b>Date field:</b> transaction endpoints filter on <b>transaction date</b> (<code>trandate</code>). The <code>debtor</code> endpoint filters on <b>last-modified date</b> (customer records have no transaction date).</p>
-<p class="pagination-note"><b>Whole-record paging:</b> pagination selects a page of transaction IDs first, then returns the full record for each. A line-level record (invoice, credit memo, sales order, payment) is never split across two pages — all of its lines stay together.</p>
+<p class="pagination-note"><b>Whole-record paging:</b> pagination selects a page of transaction IDs first, then returns the full record for each. A line-level record (invoice, credit memo, sales order, payment) is never split across two pages all of its lines stay together.</p>
 <h3>Response fields</h3>
 <table>
 <tr><th>Field</th><th>Description</th></tr>
 <tr><td><code>filters</code></td><td>Echoes the <code>fromDate</code> / <code>toDate</code> / <code>id</code> actually applied (dates in DD/MM/YYYY).</td></tr>
 <tr><td><code>paginationEnabled</code></td><td><code>true</code> when <code>page</code> or <code>pageSize</code> was supplied; otherwise <code>false</code>.</td></tr>
-<tr><td><code>pagination</code></td><td>Present when paging is active — see the object below. <code>null</code> when disabled.</td></tr>
+<tr><td><code>pagination</code></td><td>Present when paging is active see the object below. <code>null</code> when disabled.</td></tr>
 </table>
 <h3>The <code>pagination</code> object</h3>
 <table>
@@ -3089,7 +3089,7 @@ error message: An unexpected SuiteScript error has occurred</pre>
 <tr><td><code>pageSize</code></td><td>Records requested per page</td></tr>
 <tr><td><code>totalRecords</code></td><td>Total records matching the filter (across all pages)</td></tr>
 <tr><td><code>totalPages</code></td><td>Total number of pages</td></tr>
-<tr><td><code>hasMore</code></td><td><code>true</code> if a next page exists — use it to enable a “Next” control</td></tr>
+<tr><td><code>hasMore</code></td><td><code>true</code> if a next page exists use it to enable a “Next” control</td></tr>
 <tr><td><code>returnedRecords</code></td><td>Number of records on this page</td></tr>
 </table>
 <h3>Example request</h3>
@@ -3108,7 +3108,7 @@ error message: An unexpected SuiteScript error has occurred</pre>
   <span class="pagination-key">"totalRecords"</span>: <span class="pagination-number">50</span>,
   <span class="pagination-key">"data"</span>: [ <span class="pagination-null">/* ...50 records... */</span> ]
 }</code></pre>
-<p class="pagination-note"><b>Building a paged UI:</b> read <code>pagination</code> on page 1 — <code>totalPages</code> tells you how many pages exist and <code>hasMore</code> whether a “Next” button should be active. Request the next page by resending the same URL with <code>page</code> incremented.</p>
+<p class="pagination-note"><b>Building a paged UI:</b> read <code>pagination</code> on page 1 <code>totalPages</code> tells you how many pages exist and <code>hasMore</code> whether a “Next” button should be active. Request the next page by resending the same URL with <code>page</code> incremented.</p>
 </div>
 </section>
 
