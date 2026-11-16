@@ -847,12 +847,12 @@
                                 <tr>
                                     <td><span class="param-name">Certificate ID</span></td>
                                     <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">String</code></td>
-                                    <td>Provided by Feoda after your certificate is uploaded. Goes in the JWT header as <code>kid</code></td>
+                                    <td>Provided by Feoda. Goes in the JWT header as <code>kid</code></td>
                                 </tr>
                                 <tr>
                                     <td><span class="param-name">Private Key</span></td>
                                     <td><code style="background: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 4px;">private.pem</code></td>
-                                    <td>Your EC P-256 private key. Signs the JWT. Never shared</td>
+                                    <td>Provided by Feoda (sent separately and securely). Signs the JWT. Keep it secret</td>
                                 </tr>
                                 <tr>
                                     <td><span class="param-name">Algorithm</span></td>
@@ -872,21 +872,7 @@
                             </tbody>
                         </table>
 
-                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 1 &ndash; Create your key pair (one time)</h4>
-                        <p style="color: #4b5563; line-height: 1.7; margin-bottom: 1rem;">Run these commands (macOS/Linux terminal, or Git Bash on Windows). Send <strong>public.pem</strong> to Feoda and keep <strong>private.pem</strong> secure.
-                            Feoda maps the certificate in NetSuite and returns your <strong>Client ID</strong> and <strong>Certificate ID</strong>.
-                            If Feoda has already supplied a sandbox key pair for testing, skip this step.</p>
-                        <div class="code-block">
-                    <button class="copy-btn" onclick="copyCode(this)">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        Copy
-                    </button>
-<pre>openssl ecparam -name prime256v1 -genkey -noout -out private.pem
-openssl req -new -x509 -key private.pem -out public.pem -days 730 -subj &quot;/CN=&lt;Your company&gt; NetSuite Sandbox&quot;</pre>
-                            </div>
-                        <p style="color: #6b7280; font-size: 0.875rem; margin-top: 0.5rem;"><em>The certificate is valid for 2 years (the maximum NetSuite accepts). Renew it before it expires.</em></p>
-
-                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 2 &ndash; Create the signed JWT</h4>
+                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 1 &ndash; Create the signed JWT</h4>
                         <table class="param-table" style="margin-bottom: 1rem;">
                             <thead><tr><th>Claim</th><th>Value</th><th>Description</th></tr></thead>
                             <tbody>
@@ -967,7 +953,7 @@ def make_jwt(client_id, cert_id, private_key_pem):
                             </div>
                         <p style="color: #6b7280; font-size: 0.875rem; margin-top: 0.5rem;"><em>Any JWT library that supports ES256 works the same way (.NET, Java, PHP, etc.).</em></p>
 
-                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 3 &ndash; Get an access token</h4>
+                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 2 &ndash; Get an access token</h4>
                         <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -999,7 +985,7 @@ grant_type=client_credentials
                             <li><strong>Body</strong> tab: <strong>x-www-form-urlencoded</strong> with the keys
                                 <code>grant_type</code> = <code>client_credentials</code>,
                                 <code>client_assertion_type</code> = <code>urn:ietf:params:oauth:client-assertion-type:jwt-bearer</code>,
-                                <code>client_assertion</code> = your signed JWT from Step 2</li>
+                                <code>client_assertion</code> = your signed JWT from Step 1</li>
                             <li><strong>Scripts</strong> tab &rarr; <strong>Post-response</strong>, add the snippet below so the token is saved for the other requests</li>
                             <li>Click <strong>Send</strong>. A new JWT is needed each time (they expire after 60 minutes).</li>
                         </ol>
@@ -1012,7 +998,7 @@ grant_type=client_credentials
 if (r.access_token) pm.collectionVariables.set(&#x27;access_token&#x27;, r.access_token);</pre>
                             </div>
 
-                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 4 &ndash; Call the endpoints</h4>
+                        <h4 style="font-weight: 600; margin: 2rem 0 1rem; color: #1f2937;">Step 3 &ndash; Call the endpoints</h4>
                         <p style="color: #4b5563; line-height: 1.7; margin-bottom: 1rem;">Use the endpoints below exactly as documented, with the access token as a Bearer token:</p>
                         <div class="code-block">
                     <button class="copy-btn" onclick="copyCode(this)">
